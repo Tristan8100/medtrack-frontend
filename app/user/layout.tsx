@@ -1,79 +1,109 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { api } from "@/lib/api";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Card } from "@/components/ui/card";
-import { LogOut } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
+import { userData } from "@/components/objects/admin-sidebar-object";
 
 export default function UserLayout({ children }: { children: React.ReactNode }) {
     const router = useRouter();
-    const { user, setUser, logout } = useAuth();
+    const { user, setUser } = useAuth();
     const pathname = usePathname();
 
-    // On mount, verify token and fetch user info, diy middleware for every refresh
-    useEffect(() => {
-    const token = localStorage.getItem("token");
-    
-    if (!token) {
-      router.push("/auth/login");
-      return;
-    }
-
-    const verifyUser = async () => {
-      try {
-        const res = await api.get("/api/verify-user", { //RETURN THE IMAGE PATH IF EXIST AH
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        
-        setUser(res.data.user_info);
-        console.log("User set:", res.data.user_info); // for debugging again
-      } catch (error) {
-        console.error("Verification failed:", error);
-        localStorage.removeItem("token");
-        setUser(null);
-        router.push("/auth/login");
-      }
+    // Get current page name from pathname
+    const getPageName = () => {
+      const segments = pathname.split('/').filter(Boolean);
+      const lastSegment = segments[segments.length - 1] || 'dashboard';
+      return lastSegment
+        .split('-')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
     };
 
-    verifyUser();
-  }, [pathname]);// Added pathname to re-verify on route change
+    // On mount, verify token and fetch user info
+    useEffect(() => {
+      const token = localStorage.getItem("token");
+      
+      if (!token) {
+        router.push("/auth/login");
+        return;
+      }
 
-  // for debugging
-  useEffect(() => {
-    console.log("User state updated:", user);
-  }, [user]);
+      const verifyUser = async () => {
+        try {
+          const res = await api.get("/api/verify-user", {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+          
+          setUser(res.data.user_info);
+          console.log("User set:", res.data.user_info);
+        } catch (error) {
+          console.error("Verification failed:", error);
+          localStorage.removeItem("token");
+          setUser(null);
+          router.push("/auth/login");
+        }
+      };
 
-  if (!user) {
-    // This will trigger if verification fails
-    return null;
-  }
-  return (
-    <div className="flex min-h-screen flex-col bg-muted/20">
-      {/* Header */}
-      <header className="flex h-16 items-center justify-between px-6 bg-primary text-primary-foreground shadow-md">
-        <h1 className="text-2xl font-semibold tracking-tight">User Dashboard</h1>
-        <Button
-          variant="secondary"
-          size="sm"
-          className="flex items-center gap-2"
-          onClick={logout}
-        >
-          <LogOut className="h-4 w-4" />
-          Logout
-        </Button>
-      </header>
+      verifyUser();
+    }, [pathname]);
 
-      <Separator />
+    useEffect(() => {
+      console.log("User state updated:", user);
+    }, [user]);
 
-      {/* Main Content */}
-      <main className="flex-1 p-6 overflow-y-auto">
-        <Card className="p-6 shadow-sm bg-background">{children}</Card>
-      </main>
-    </div>
-  );
+    if (!user) {
+      return null;
+    }
+
+    return (
+      <SidebarProvider
+        style={
+          {
+            "--sidebar-width": "19rem",
+          } as React.CSSProperties
+        }
+      >
+        <AppSidebar data={userData} user={user} />
+        <SidebarInset>
+          {/*Header */}
+          <header className="sticky top-0 z-50 flex h-16 shrink-0 items-center gap-4 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-6 transition-all duration-200">
+            <SidebarTrigger className="-ml-1 h-9 w-9 rounded-xl hover:bg-accent hover:scale-105 active:scale-95 transition-all duration-200 hidden md:flex" />
+            
+            {/* page title */}
+            <div className="flex items-center gap-3 flex-1">
+              <div className="h-8 w-1 bg-gradient-to-b from-primary to-primary/50 rounded-full" />
+              <div className="flex flex-col">
+                <h1 className="text-xl font-bold tracking-tight bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+                  {getPageName()}
+                </h1>
+                <p className="text-xs text-muted-foreground">
+                  {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}
+                </p>
+              </div>
+            </div>
+
+            {/* User Welcome card */}
+            <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-accent/50">
+              <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
+              <span className="text-sm font-medium">
+                Welcome, <span className="text-primary">{user.name.split(' ')[0]}</span>
+              </span>
+            </div>
+          </header>
+
+          {/* Children Area */}
+          <div className="flex flex-1 flex-col">
+            {children}
+            <div>
+              <SidebarTrigger className="md:hidden fixed bottom-6 right-6 h-12 w-12 rounded-full bg-accent hover:scale-105 active:scale-95 transition-all duration-200 shadow-lg flex items-center justify-center z-50" />
+            </div>
+          </div>
+        </SidebarInset>
+      </SidebarProvider>
+    );
 }

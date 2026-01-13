@@ -24,12 +24,13 @@ export function RegisterForm({
 }: React.ComponentProps<"div">) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [name, setName] = useState('');
   const [error, setError] = useState('');
   const router = useRouter();
 
   const registerMutation = useMutation({
-    mutationFn: (credentials: { email: string; password: string; name: string }) => 
+    mutationFn: (credentials: { email: string; password: string; name: string, phoneNumber: string }) => 
       api.post('/api/register', credentials).then(res => res.data),
     onSuccess: (data) => {
       console.log('Registration successful:', data);
@@ -51,7 +52,7 @@ export function RegisterForm({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    registerMutation.mutate({ email, password, name });
+    registerMutation.mutate({ email, password, name, phoneNumber });
   };
 
   return (
@@ -86,6 +87,17 @@ export function RegisterForm({
                     placeholder="m@example.com"
                     value={email}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="grid gap-3">
+                  <Label htmlFor="number">Phone Number</Label>
+                  <Input
+                    id="number"
+                    type="number"
+                    placeholder="0983...."
+                    value={phoneNumber}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPhoneNumber(e.target.value)}
                     required
                   />
                 </div>

@@ -16,11 +16,17 @@ import {
 } from "@/components/ui/sidebar"
 import { useAuth } from '@/contexts/AuthContext';
 import { useEffect } from 'react';
+import { data } from "@/components/objects/admin-sidebar-object"
+
 export default function Page({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
   useEffect(() => {
     console.log(user);
   });
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <SidebarProvider
@@ -30,7 +36,7 @@ export default function Page({ children }: { children: React.ReactNode }) {
         } as React.CSSProperties
       }
     >
-      <AppSidebar />
+      <AppSidebar data={data} user={user} />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 px-4">
           <SidebarTrigger className="-ml-1" />

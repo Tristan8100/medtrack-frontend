@@ -8,155 +8,26 @@ import { NavUser } from "./nav-user"
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from "@/components/ui/sidebar"
 
 import type { LucideIcon } from "lucide-react"
+import { AppData } from "./objects/admin-sidebar-object"
 
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+};
 
-export interface SubNavItem {
-  title: string
-  url: string
-}
-
-export interface NavItem {
-  title: string
-  url: string
-  icon?: LucideIcon
-  isActive?: boolean
-  items?: SubNavItem[]
-}
-
-export interface User {
-  name: string
-  email: string
-  avatar: string
-}
-
-export interface AppData {
+export type SidebarProps = React.ComponentProps<typeof Sidebar> & {
+  data: AppData;
   user: User
-  navMain: NavItem[]
-}
-
-export const data: AppData = {
-  user: {
-    name: "Nurse Maria Santos",
-    email: "maria@rhu4.gov.ph",
-    avatar: "/avatars/staff.jpg",
-  },
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "/dashboard",
-      icon: Home,
-      isActive: true,
-    },
-    {
-      title: "Appointments",
-      url: "/appointments",
-      icon: Calendar,
-      items: [
-        {
-          title: "All Appointments",
-          url: "/appointments",
-        },
-        {
-          title: "Today's Schedule",
-          url: "/appointments/today",
-        },
-        {
-          title: "Pending",
-          url: "/appointments/pending",
-        },
-        {
-          title: "Completed",
-          url: "/appointments/completed",
-        },
-      ],
-    },
-    {
-      title: "Patients",
-      url: "/patients",
-      icon: Users,
-      items: [
-        {
-          title: "All Patients",
-          url: "/patients",
-        },
-        {
-          title: "Register Patient",
-          url: "/patients/register",
-        },
-        {
-          title: "Search Records",
-          url: "/patients/search",
-        },
-      ],
-    },
-    {
-      title: "Medical Records",
-      url: "/medical-records",
-      icon: FileText,
-      items: [
-        {
-          title: "All Records",
-          url: "/medical-records",
-        },
-        {
-          title: "Create Record",
-          url: "/medical-records/create",
-        },
-        {
-          title: "Recent Visits",
-          url: "/medical-records/recent",
-        },
-      ],
-    },
-    {
-      title: "Analytics",
-      url: "/analytics",
-      icon: BarChart3,
-      items: [
-        {
-          title: "Overview",
-          url: "/analytics",
-        },
-        {
-          title: "Patient Demographics",
-          url: "/analytics/demographics",
-        },
-        {
-          title: "Top Diagnoses",
-          url: "/analytics/diagnoses",
-        },
-        {
-          title: "Reports",
-          url: "/analytics/reports",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "/settings",
-      icon: Settings,
-      items: [
-        {
-          title: "Profile",
-          url: "/settings/profile",
-        },
-        {
-          title: "Staff Management",
-          url: "/settings/staff",
-        },
-        {
-          title: "System Settings",
-          url: "/settings/system",
-        },
-      ],
-    },
-  ],
-}
+};
 
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+
+
+
+export function AppSidebar({ data, user, ...props }: SidebarProps) {
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar variant="floating" collapsible="icon" {...props}>
       <SidebarHeader className="py-4">
         <div className="flex items-center gap-3">
           <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg flex-shrink-0">
@@ -172,7 +43,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={user} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

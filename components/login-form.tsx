@@ -30,12 +30,34 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
       router.push("/admin/dashboard");
       console.log("Admin login successful");
     } catch (err: any) {
-      console.error("Admin login failed", err);
-      if (err.response?.data?.message) {
-        setError(err.response.data.message);
-      } else {
-        setError("An unexpected error occurred.");
+      console.warn("User login failed, attempting admin login...");
+
+      const status = err.response?.status;
+      //const message = err.response?.data?.message;
+      if (status === 401) {
+        attemptStaffLogin({ email, password });
+      } else if (status === 403) {
+        sendOtp('admin');
       }
+    }
+  };
+
+  const attemptStaffLogin = async (credentials: { email: string; password: string }) => {
+    try {
+      const res = await api.post("/api/staff-login", credentials);
+      login(res.data.admin_info, res.data.token);
+      //router.push("/staff/dashboard");
+      console.log("Staff login successful");
+    } catch (err: any) {
+      console.error("Staff login failed", err);
+      const status = err.response?.status;
+      //const message = err.response?.data?.message;
+      if (status === 401) {
+        setError("Invalid credentials. Please try again.");
+      } else if (status === 403) {
+        sendOtp('staff');
+      }
+      
     }
   };
 
@@ -57,17 +79,26 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
       if (status === 401) {
         attemptAdminLogin({ email, password });
       } else if (status === 403) {
-        api.post("/api/send-otp", { email })
-          .then((otpRes) => {
-            localStorage.setItem("email", email);
-            router.push("/auth/verify-otp");
-          })
-          .catch(() => {
-            setError("Failed to send OTP. Please try again later.");
-          });
+        // api.post("/api/send-otp", { email })
+        //   .then((otpRes) => {
+        //     localStorage.setItem("email", email);
+        //     router.push("/auth/verify-otp");
+        //   })
+        //   .catch(() => {
+        //     setError("Failed to send OTP. Please try again later.");
+        //   });
+        
+        sendOtp('patient');
       }
     },
   });
+
+  const sendOtp = (role: string) => {
+    console.warn(role, "NOT REGISTERED");
+    console.log("Sending OTP to", email);
+    localStorage.setItem("email", email);
+    router.push("/auth/verify-otp");
+  };
 
   // handle form submission, will call the mutation of user login
   const handleSubmit = (e: React.FormEvent) => {
