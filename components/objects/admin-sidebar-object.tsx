@@ -40,14 +40,6 @@ export const userData: AppData = {
           title: "Today's Schedule",
           url: "/user/appointments/today",
         },
-        {
-          title: "Pending",
-          url: "/user/appointments/pending",
-        },
-        {
-          title: "Completed",
-          url: "/user/appointments/completed",
-        },
       ],
     },
     {
@@ -79,14 +71,6 @@ export const data: AppData = {
         {
           title: "Today's Schedule",
           url: "/admin/appointments/today",
-        },
-        {
-          title: "Pending",
-          url: "/admin/appointments/pending",
-        },
-        {
-          title: "Completed",
-          url: "/admin/appointments/completed",
         },
       ],
     },
