@@ -8,8 +8,8 @@ import AppointmentCard from "@/components/appointment/appointment-card";
 
 export interface Appointment {
   _id: string;
-  patientId: Patient;
-  staffId: string | null;
+  patientId: UserAppoint;
+  staffId: UserAppoint | null;
   date: Date;
   status: string;
   chiefComplaint: string;
@@ -18,7 +18,7 @@ export interface Appointment {
   updated_at: Date;
 }
 
-export interface Patient {
+export interface UserAppoint {
   _id: string;
   name: string;
 }
