@@ -16,6 +16,7 @@ import { useMutation } from '@tanstack/react-query';
 import { api } from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import Link from "next/link";
 
 export function SendResetLinkForm({
   className,
@@ -86,9 +87,9 @@ export function SendResetLinkForm({
               )}
               <div className="text-center text-sm">
                 Remember your password?{" "}
-                <a href="/login" className="underline underline-offset-4">
+                <Link href="/auth/login" className="underline underline-offset-4">
                   Sign in
-                </a>
+                </Link>
               </div>
             </div>
           </form>

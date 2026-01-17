@@ -2,6 +2,7 @@
 
 import { LoginForm } from "@/components/login-form";
 import { HeartPulse } from "lucide-react"
+import Link from "next/link";
 import { ReactNode } from "react";
 
 export default function LoginPage({ children }: { children: ReactNode }) {
@@ -12,10 +13,10 @@ export default function LoginPage({ children }: { children: ReactNode }) {
         <div className="absolute inset-0 bg-gradient-to-br from-teal-500 via-cyan-600 to-blue-600" />
         <div className="relative z-10 flex h-full flex-col justify-between p-10 text-white">
           <div className="flex items-center gap-2 text-lg font-semibold">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/20 backdrop-blur-sm">
+            <Link href="/" className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/20 backdrop-blur-sm">
               <HeartPulse className="h-6 w-6" />
-            </div>
-            <span>HealthCare Clinic</span>
+            </Link>
+            <span>Medtrack - HealthCare Clinic</span>
           </div>
           
           <div className="space-y-6">

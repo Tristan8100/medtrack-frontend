@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Link from 'next/link';
 
 export default function ResetPassword() {
     const router = useRouter();
@@ -98,6 +99,12 @@ export default function ResetPassword() {
                                     {error}
                                 </div>
                             )}
+                            <div className="text-center text-sm">
+                                Remember your password?{" "}
+                                <Link href="/auth/login" className="underline underline-offset-4">
+                                Sign in
+                                </Link>
+                            </div>
                         </div>
                     </form>
                 </CardContent>
