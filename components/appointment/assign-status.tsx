@@ -33,7 +33,7 @@ const STATUS_OPTIONS = ['pending', 'scheduled', 'completed', 'cancelled', 'no-sh
 
 export default function AppointmentModal({ appointment, role, onUpdated }: StatusDialogProps) {
   const [open, setOpen] = useState(false);
-  const [status, setStatus] = useState(appointment.status);
+  const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 

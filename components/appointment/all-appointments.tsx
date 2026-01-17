@@ -28,10 +28,11 @@ export interface UserAppoint {
 
 export interface roleBasedProps {
   role: "patient" | "staff" | "admin";
+  id?: string;
 }
 
-export default function AllAppointmentsPage({ role }: roleBasedProps) {
-  const [appointments, setAppointments] = useState<Appointment[]>([]);
+export default function AllAppointmentsPage({ role, id }: roleBasedProps) {
+  const [appointments, setAppointments] = useState<Appointment[] | null>(null);
 
   const [search, setSearch] = useState('');
   const [status, setStatus] = useState('');
@@ -48,7 +49,10 @@ export default function AllAppointmentsPage({ role }: roleBasedProps) {
 
   const fetchAppointments = async () => {
     try {
-      const endpoint = role === 'patient' ? '/appointments/my-appointments' : '/appointments'; // Role Checking, One Component
+      let endpoint = role === 'patient' ? '/appointments/my-appointments' : '/appointments'; // Role Checking, One Component
+      if (id) {
+        endpoint = '/appointments/user-appointments/' + id;
+      }
       const response = await api2.get(endpoint, {
         params: {
           page,
@@ -84,6 +88,10 @@ export default function AllAppointmentsPage({ role }: roleBasedProps) {
   useEffect(() => {
     setPage(1);
   }, [search, status, startDate, endDate]);
+
+  if(!appointments){
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="space-y-6 p-6">
