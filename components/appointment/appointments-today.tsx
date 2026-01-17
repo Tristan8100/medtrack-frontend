@@ -34,14 +34,14 @@ export default function TodayAppointmentsPage({ role }: roleBasedProps) {
   const [page, setPage] = useState(1);
   const [hasNextPage, setHasNextPage] = useState(false);
 
-  const limit = 10;
+  //const limit = 10;
 
   // today YYYY-MM-DD format
   const today = new Date().toISOString().split('T')[0];
 
   const fetchAppointments = async () => {
     try {
-      const endpoint = role === 'patient' ? '/appointments/my-appointments' : '/appointments'; // Role Checking, One Component
+      const endpoint = role === 'patient' ? '/appointments/my-appointments' : '/appointments?status=scheduled'; // Role Checking, One Component
       const response = await api2.get(endpoint, {
         params: {
           page,
@@ -50,9 +50,9 @@ export default function TodayAppointmentsPage({ role }: roleBasedProps) {
         },
       });
 
-      const data = response.data.data;
+      const data = response.data.data.data; //1 data: actual response obj, 2 data: placeholder on ResponseType, 3 data: actual data
       setAppointments(data);
-      setHasNextPage(data.length === limit);
+      setHasNextPage(response.data.data.nextPage);
     } catch (error) {
       console.error('Error fetching today appointments:', error);
     }

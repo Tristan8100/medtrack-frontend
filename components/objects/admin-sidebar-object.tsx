@@ -75,9 +75,19 @@ export const data: AppData = {
       ],
     },
     {
-      title: "Patients",
+      title: "Users",
       url: "/admin/patients",
       icon: Users,
+      items: [
+        {
+          title: "Patients",
+          url: "/admin/patients",
+        },
+        {
+          title: "Staffs",
+          url: "/admin/staff",
+        },
+      ],
     },
     {
       title: "Medical Records",
@@ -93,20 +103,6 @@ export const data: AppData = {
       title: "Settings",
       url: "/admin/settings",
       icon: Settings,
-      items: [
-        {
-          title: "Profile",
-          url: "/admin/settings/profile",
-        },
-        {
-          title: "Staff Management",
-          url: "/admin/settings/staff",
-        },
-        {
-          title: "System Settings",
-          url: "/admin/settings/system",
-        },
-      ],
     },
   ],
 }

@@ -46,7 +46,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
     try {
       const res = await api.post("/api/staff-login", credentials);
       login(res.data.admin_info, res.data.token);
-      //router.push("/staff/dashboard");
+      router.push("/admin/dashboard");
       console.log("Staff login successful");
     } catch (err: any) {
       console.error("Staff login failed", err);

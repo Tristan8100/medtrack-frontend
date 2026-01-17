@@ -43,7 +43,8 @@ export default function AllAppointmentsPage({ role }: roleBasedProps) {
   const [page, setPage] = useState(1);
   const [hasNextPage, setHasNextPage] = useState(false);
 
-  const limit = 10; // same sa backend limit
+  //const limit = 10; // same sa backend limit
+  //const [limit, setLimit] = useState(10);
 
   const fetchAppointments = async () => {
     try {
@@ -58,9 +59,9 @@ export default function AllAppointmentsPage({ role }: roleBasedProps) {
         },
       });
 
-      const data = response.data.data;
+      const data = response.data.data.data; //1 data: actual response obj, 2 data: placeholder on ResponseType, 3 data: actual data
       setAppointments(data);
-      setHasNextPage(data.length === limit); //if returned data is full, assume there is a next page
+      setHasNextPage(response.data.data.nextPage); //if returned data is full, assume there is a next page
     } catch (error) {
       console.error('Error fetching appointments:', error);
       setError('Failed to fetch appointments. Please try again.');

@@ -34,7 +34,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
     const verifyUser = async () => {
       try {
-        const res = await api.get("/api/verify-admin", { //RETURN THE IMAGE PATH IF EXIST AH
+        const res = await api.get("/api/verify-all", { //RETURN THE IMAGE PATH IF EXIST AH
           headers: { Authorization: `Bearer ${token}` }
         });
         
