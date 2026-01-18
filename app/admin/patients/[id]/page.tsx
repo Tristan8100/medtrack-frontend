@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import AllAppointmentsPage from "@/components/appointment/all-appointments";
+import DialogCreateMedicalRecord from "@/components/medical-records/create-medical-record";
 
 interface User {
   _id: string;
@@ -79,7 +80,7 @@ export default function PatientsPage() {
                     <CardDescription>Personal details and account status</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="grid gap-6">
+                    <div className="grid gap-6 mb-4">
                         <div className="flex items-center gap-4">
                             <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
                                 <User className="h-6 w-6 text-primary" />
@@ -146,6 +147,7 @@ export default function PatientsPage() {
                             </div>
                         </div>
                     </div>
+                    <DialogCreateMedicalRecord patientId={user._id} onSuccess={() => fetchUser()} />
                 </CardContent>
             </Card>
 

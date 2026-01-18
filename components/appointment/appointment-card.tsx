@@ -1,3 +1,4 @@
+import DialogCreateMedicalRecord from "../medical-records/create-medical-record";
 import { Card } from "../ui/card";
 import { Appointment } from "./all-appointments";
 import AppointmentModal from "./assign-status";
@@ -35,6 +36,7 @@ export default function AppointmentCard({ appointment, role, fetchAppointments }
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
         <p><span className="font-medium">Patient:</span> {appointment.patientId.name}</p>
+        <p><span className="font-medium">Patient Id:</span> {appointment.patientId._id}</p>
         <p><span className="font-medium">Staff:</span> {appointment.staffId?.name ?? '—'}</p>
 
         <p>
@@ -62,6 +64,8 @@ export default function AppointmentCard({ appointment, role, fetchAppointments }
         </p>
         <p className="text-sm text-muted-foreground">{appointment.notes}</p>
       </div>
+      {/* Modal */}
+      <DialogCreateMedicalRecord patientId={appointment.patientId._id} appointmentId={appointment._id} onSuccess={() => fetchAppointments()} />
 
       {/* Modal */}
       <AppointmentModal
