@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectItem, SelectTrigger, SelectValue, SelectContent } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import DialogUpdateUser from './update-staff';
 
 export interface User {
   _id: string;
@@ -133,9 +134,14 @@ export default function UsersPage({ searchRole, title, description }: UserProps)
                 <p className="text-sm text-muted-foreground">{user.email}</p>
               </div>
               <span className="text-sm capitalize">{user.role}</span>
-              <Link href={searchRole === 'patient' ? `/admin/patients/${user._id}` : searchRole === 'staff' ? `/admin/staff/${user._id}` : `/admin/admin/${user._id}`}>
-                <Button>View</Button>
-              </Link>
+              {searchRole === 'patient' &&
+                <Link href={`/admin/patients/${user._id}`}>
+                  <Button>View</Button>
+                </Link>
+              }
+              {searchRole=== 'staff' &&
+                <DialogUpdateUser user={user} onSuccess={fetchUsers} />
+              }
             </div>
           </Card>
         ))}

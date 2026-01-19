@@ -9,6 +9,8 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import AllAppointmentsPage from "@/components/appointment/all-appointments";
 import DialogCreateMedicalRecord from "@/components/medical-records/create-medical-record";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import AllMedicalRecordsPage from "@/components/medical-records/all-medical-records";
 
 interface User {
   _id: string;
@@ -151,7 +153,21 @@ export default function PatientsPage() {
                 </CardContent>
             </Card>
 
-            <AllAppointmentsPage role="staff" id={id} />
+            {/* Tabs for Appointments / Medical Records */}
+            <Tabs defaultValue="appointments" className="space-y-4">
+                <TabsList>
+                    <TabsTrigger value="appointments">Appointments</TabsTrigger>
+                    <TabsTrigger value="medical-records">Medical Records</TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="appointments">
+                    <AllAppointmentsPage role="staff" id={id} />
+                </TabsContent>
+
+                <TabsContent value="medical-records">
+                    <AllMedicalRecordsPage role="staff" id={id} />
+                </TabsContent>
+            </Tabs>
         </div>
     );
 }

@@ -116,6 +116,7 @@ export default function DialogCreateMedicalRecord({
         <DialogHeader>
           <DialogTitle>Create Medical Record</DialogTitle>
           {patientId && <DialogTitle className="text-sm">Patient Id: {patientId}</DialogTitle>}
+          {appointmentId && <DialogTitle className="text-sm">Appointment Id: {appointmentId}</DialogTitle>}
         </DialogHeader>
 
         <form className="space-y-4 mt-2" onSubmit={handleSubmit}>

@@ -94,11 +94,11 @@ export default function AllAppointmentsPage({ role, id }: roleBasedProps) {
   }
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-6 md:p-6">
       {/* Header */}
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1 flex items-center justify-center md:block mt-4 md:mt-0">
         <h1 className="text-3xl font-semibold">{role === "patient" ? "My" : "All"} Appointments</h1> {/* Role Checking, One Component */}
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-muted-foreground mb-4">
           Manage and review all appointments
         </p>
         {role === "patient" && <DialogCreate onSuccess={() => fetchAppointments()} />} {/* Role Checking, One Component */}

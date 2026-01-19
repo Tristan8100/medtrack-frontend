@@ -5,7 +5,7 @@ import { api2 } from "@/lib/api";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import DialogCreateMedicalRecord from "./create-medical-record";
+import UpdateMedicalRecord from "./update-medical-records";
 
 export interface MedicalRecord {
   _id: string;
@@ -115,9 +115,9 @@ export default function AllMedicalRecordsPage({ role, id }: RoleBasedProps) {
   }
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-6 md:p-6">
       {/* Header */}
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1 flex items-center justify-center md:block mt-4 md:mt-0">
         <h1 className="text-3xl font-semibold">
           {role === "patient" ? "My" : "All"} Medical Records
         </h1>
@@ -182,6 +182,13 @@ export default function AllMedicalRecordsPage({ role, id }: RoleBasedProps) {
                 <p>Height: {record.vitalSigns.height || 'N/A'}</p>
                 <p>BMI: {record.vitalSigns.bmi || 'N/A'}</p>
               </div>
+            )}
+
+            {(role === 'staff' || role === 'admin') && (
+              <UpdateMedicalRecord
+                record={record}
+                onUpdated={fetchMedicalRecords}
+              />
             )}
           </Card>
         ))}
