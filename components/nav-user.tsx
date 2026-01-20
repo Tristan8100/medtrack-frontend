@@ -73,10 +73,6 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator className="my-1" />
             <div className="p-1">
-              <DropdownMenuItem className="cursor-pointer rounded-lg px-3 py-2.5 text-[14px] font-medium transition-all duration-200 hover:bg-accent hover:scale-[1.02] active:scale-[0.98]">
-                <UserIcon className="h-4 w-4 mr-2" />
-                Account
-              </DropdownMenuItem>
               <DropdownMenuItem onClick={logout} className="cursor-pointer rounded-lg px-3 py-2.5 text-[14px] font-medium transition-all duration-200 hover:bg-destructive/10 hover:text-destructive hover:scale-[1.02] active:scale-[0.98]">
                 <LogOut className="h-4 w-4 mr-2" />
                 Log out

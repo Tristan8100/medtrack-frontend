@@ -8,6 +8,8 @@ import { Select, SelectItem, SelectTrigger, SelectValue, SelectContent } from '@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import DialogUpdateUser from './update-staff';
+import RegisterStaffDialog from './create-staff';
+import DeleteStaffDialog from './delete-staff';
 
 export interface User {
   _id: string;
@@ -76,11 +78,14 @@ export default function UsersPage({ searchRole, title, description }: UserProps)
   return (
     <div className="space-y-6 p-6">
       {/* Header */}
-      <div>
+      <div className="flex flex-col gap-1 flex items-center justify-center md:block mt-4 md:mt-0">
         <h1 className="text-3xl font-semibold">{title}</h1>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-muted-foreground mb-4">
           {description}
         </p>
+        {searchRole === 'staff' && (
+          <RegisterStaffDialog onSuccess={fetchUsers} />
+        )}
       </div>
 
       {/* Filters */}
@@ -140,7 +145,10 @@ export default function UsersPage({ searchRole, title, description }: UserProps)
                 </Link>
               }
               {searchRole=== 'staff' &&
+              <div>
                 <DialogUpdateUser user={user} onSuccess={fetchUsers} />
+                <DeleteStaffDialog staffId={user._id} staffName={user.name} onSuccess={fetchUsers} />
+              </div>
               }
             </div>
           </Card>

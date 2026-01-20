@@ -37,7 +37,7 @@ export default function AppointmentCard({ appointment, role, fetchAppointments }
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
         <p><span className="font-medium">Patient:</span> {appointment.patientId.name}</p>
         <p><span className="font-medium">Patient Id:</span> {appointment.patientId._id}</p>
-        <p><span className="font-medium">Staff:</span> {appointment.staffId?.name ?? '—'}</p>
+        <p><span className="font-medium">Staff:</span> {appointment.staffId?.name ?? '—'}</p>{/* always checkk if exist if implement delete */}
 
         <p>
           <span className="font-medium">Date:</span>{' '}
@@ -65,7 +65,7 @@ export default function AppointmentCard({ appointment, role, fetchAppointments }
         <p className="text-sm text-muted-foreground">{appointment.notes}</p>
       </div>
       {/* Modal */}
-      <DialogCreateMedicalRecord patientId={appointment.patientId._id} appointmentId={appointment._id} onSuccess={() => fetchAppointments()} />
+      {role !== 'patient' && <DialogCreateMedicalRecord patientId={appointment.patientId._id} appointmentId={appointment._id} onSuccess={() => fetchAppointments()} /> }
 
       {/* Modal */}
       <AppointmentModal

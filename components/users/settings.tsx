@@ -14,6 +14,7 @@ interface UserType {
   name: string;
   email: string;
   role: string;
+  phoneNumber: string;
 }
 
 export default function MyProfilePage() {
@@ -25,6 +26,7 @@ export default function MyProfilePage() {
   const [profileForm, setProfileForm] = useState({
     name: '',
     email: '',
+    phoneNumber: '',
   });
 
   const [passwordForm, setPasswordForm] = useState({
@@ -46,6 +48,7 @@ export default function MyProfilePage() {
       setProfileForm({
         name: userData.name,
         email: userData.email,
+        phoneNumber: userData.phoneNumber,
       });
     } catch (err: any) {
       toast.error('Failed to load profile', {
@@ -56,7 +59,7 @@ export default function MyProfilePage() {
     }
   };
 
-  /* ---------------- PROFILE UPDATE ---------------- */
+  /* update profile */
   const handleProfileSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) return;
@@ -64,13 +67,15 @@ export default function MyProfilePage() {
     try {
       setUpdatingProfile(true);
 
-      if (profileForm.name === user.name) {
+      if (profileForm.name === user.name && profileForm.phoneNumber === user.phoneNumber) {
         toast.info('No changes to save');
         return;
       }
 
       const res = await api2.patch('/users', {
         name: profileForm.name,
+        //email: profileForm.email, //DEBUGGING
+        phoneNumber: profileForm.phoneNumber,
       });
 
       const updatedUser = res.data.data || res.data;
@@ -86,7 +91,7 @@ export default function MyProfilePage() {
     }
   };
 
-  /* ---------------- PASSWORD UPDATE ---------------- */
+  /*password */
   const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -132,6 +137,7 @@ export default function MyProfilePage() {
               <div>
                 <h3 className="text-xl font-semibold">{user?.name}</h3>
                 <p className="text-sm text-gray-500">{user?.email}</p>
+                <p className="text-sm text-gray-500">{user?.phoneNumber}</p>
               </div>
 
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 self-start sm:self-auto">
@@ -157,6 +163,16 @@ export default function MyProfilePage() {
                       value={profileForm.name}
                       onChange={(e) =>
                         setProfileForm({ ...profileForm, name: e.target.value })
+                      }
+                    />
+                  </div>
+
+                  <div>
+                    <Label>Phone Number</Label>
+                    <Input
+                      value={profileForm.phoneNumber}
+                      onChange={(e) =>
+                        setProfileForm({ ...profileForm, phoneNumber: e.target.value })
                       }
                     />
                   </div>

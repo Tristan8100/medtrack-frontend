@@ -85,7 +85,7 @@ export default function UpdateMedicalRecord({ record, onUpdated }: Props) {
         {/* READ-ONLY INFO */}
         <div className="space-y-1 text-sm">
           <p><strong>Patient:</strong> {record.patientId.name}</p>
-          <p><strong>Staff:</strong> {record.staffCreatedId.name}</p>
+          <p><strong>Staff:</strong> {record.staffCreatedId?.name}</p>
           <p><strong>Created:</strong> {new Date(record.created_at).toLocaleString()}</p>
         </div>
 

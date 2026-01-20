@@ -32,7 +32,7 @@ export default function StaffPage() {
 
     return (
         <>
-            <UsersPage searchRole="staff" title="Staff" description="Manage all staffs" />
+            <UsersPage searchRole="staff" title="Clinic Staffs" description="Manage all clinic staffs" />
         </>
     );
 }

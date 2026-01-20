@@ -94,11 +94,11 @@ export const data: AppData = {
       url: "/admin/medical-records",
       icon: FileText,
     },
-    {
-      title: "Analytics",
-      url: "/admin/analytics",
-      icon: BarChart3,
-    },
+    // {
+    //   title: "Analytics",
+    //   url: "/admin/analytics",
+    //   icon: BarChart3,
+    // },
     {
       title: "Settings",
       url: "/admin/settings",

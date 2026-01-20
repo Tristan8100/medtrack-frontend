@@ -169,7 +169,7 @@ export default function AllMedicalRecordsPage({ role, id }: RoleBasedProps) {
             <p><strong>Visit Date:</strong> {new Date(record.visitDate).toLocaleDateString()}</p>
             <p><strong>Chief Complaint:</strong> {record.chiefComplaint}</p>
             <p><strong>Diagnosis:</strong> {record.diagnosis || 'N/A'}</p>
-            <p><strong>Staff:</strong> {record.staffCreatedId.name}</p>
+            <p><strong>Staff:</strong> {record.staffCreatedId?.name || 'Deleted staff'}</p>
 
             {record.vitalSigns && (
               <div className="mt-2 grid grid-cols-2 gap-2">
