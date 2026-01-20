@@ -144,6 +144,7 @@ export function VerifyOtpForm({
                       onPaste={handlePaste}
                       className="w-12 h-12 text-center text-xl"
                       autoFocus={index === 0}
+                      disabled={verifyOtpMutation.isPending}
                     />
                   ))}
                 </div>

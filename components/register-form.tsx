@@ -77,6 +77,7 @@ export function RegisterForm({
                     value={name}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
                     required
+                    disabled={registerMutation.isPending}
                   />
                 </div>
                 <div className="grid gap-3">
@@ -88,6 +89,7 @@ export function RegisterForm({
                     value={email}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                     required
+                    disabled={registerMutation.isPending}
                   />
                 </div>
                 <div className="grid gap-3">
@@ -99,6 +101,7 @@ export function RegisterForm({
                     value={phoneNumber}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPhoneNumber(e.target.value)}
                     required
+                    disabled={registerMutation.isPending}
                   />
                 </div>
                 <div className="grid gap-3">
@@ -108,7 +111,8 @@ export function RegisterForm({
                     type="password" 
                     value={password} 
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} 
-                    required 
+                    required
+                    disabled={registerMutation.isPending}
                   />
                 </div>
                 <Button 
