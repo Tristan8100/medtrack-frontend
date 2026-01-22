@@ -63,6 +63,7 @@ export default function AllMedicalRecordsPage({ role, id }: RoleBasedProps) {
 
   const fetchMedicalRecords = async () => {
     try {
+      console.log('Fetching medical records...');
       setError('');
       let endpoint = role === 'patient' ? '/medical-records/my-records' : '/medical-records';
       if (id) endpoint = `/medical-records/user-records/${id}`;
@@ -75,6 +76,7 @@ export default function AllMedicalRecordsPage({ role, id }: RoleBasedProps) {
           endDate,
         },
       });
+      console.log('fetchh');
 
       const data = response.data.data.data;
       setMedicalRecords(data);
@@ -86,22 +88,21 @@ export default function AllMedicalRecordsPage({ role, id }: RoleBasedProps) {
   };
 
   // Debounced search / filter effect
-  const handleSearchChange = (value: string) => {
-    setSearch(value);
-    setPage(1);
-
-    if (searchTimeout.current) clearTimeout(searchTimeout.current);
-    searchTimeout.current = setTimeout(() => {
-      fetchMedicalRecords();
-    }, 500);
-  };
+  useEffect(() => {
+    const delay = setTimeout(() => {
+        fetchMedicalRecords();
+        console.log('hit');
+      }, 1000);
+      return () => clearTimeout(delay);
+  }, [search]);
 
 
 
   // Fetch whenever filters or page changes
   useEffect(() => {
+    console.log('hit1');
     fetchMedicalRecords();
-  }, [page, search, startDate, endDate]);
+  }, [page, startDate, endDate]);
 
   const resetFilters = () => {
     setSearch('');
@@ -132,7 +133,7 @@ export default function AllMedicalRecordsPage({ role, id }: RoleBasedProps) {
           <Input
             placeholder="Search complaint / notes / diagnosis"
             value={search}
-            onChange={(e) => handleSearchChange(e.target.value)}
+            onChange={(e) => setSearch(e.target.value)}
           />
           <Input
             type="date"
@@ -169,7 +170,7 @@ export default function AllMedicalRecordsPage({ role, id }: RoleBasedProps) {
             <p><strong>Visit Date:</strong> {new Date(record.visitDate).toLocaleDateString()}</p>
             <p><strong>Chief Complaint:</strong> {record.chiefComplaint}</p>
             <p><strong>Diagnosis:</strong> {record.diagnosis || 'N/A'}</p>
-            <p><strong>Staff:</strong> {record.staffCreatedId?.name || 'Deleted staff'}</p>
+            <p><strong>Staff:</strong> {record.staffCreatedId?.name || <span className="text-red-500">Deleted Staff</span>}</p>
 
             {record.vitalSigns && (
               <div className="mt-2 grid grid-cols-2 gap-2">

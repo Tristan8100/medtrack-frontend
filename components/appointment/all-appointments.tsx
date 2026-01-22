@@ -65,6 +65,7 @@ export default function AllAppointmentsPage({ role, id }: roleBasedProps) {
 
       const data = response.data.data.data; //1 data: actual response obj, 2 data: placeholder on ResponseType, 3 data: actual data
       setAppointments(data);
+      console.log('Fetch');
       setHasNextPage(response.data.data.nextPage); //if returned data is full, assume there is a next page
     } catch (error) {
       console.error('Error fetching appointments:', error);
@@ -74,19 +75,25 @@ export default function AllAppointmentsPage({ role, id }: roleBasedProps) {
 
   useEffect(() => {
     fetchAppointments();
+    console.log('hit1');
   }, [status, startDate, endDate, page]);
 
   // debouncer on search
-  const debounceSearch = () => {
-    const delay = setTimeout(() => {
-      fetchAppointments();
-    }, 500);
-    return () => clearTimeout(delay);
-  };
+  
+
+  useEffect(() => {
+    console.log('hit3');
+      const delay = setTimeout(() => {
+        fetchAppointments();
+      }, 1000);
+      return () => clearTimeout(delay);
+
+  }, [search]);
 
   // Reset
   useEffect(() => {
     setPage(1);
+    console.log('hit2');
   }, [search, status, startDate, endDate]);
 
   if(!appointments){
@@ -111,7 +118,6 @@ export default function AllAppointmentsPage({ role, id }: roleBasedProps) {
             placeholder="Search complaint / notes"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            onInput={debounceSearch}
           />
 
           <Select value={status} onValueChange={setStatus}>

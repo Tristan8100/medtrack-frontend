@@ -23,6 +23,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const attemptAdminLogin = async (credentials: { email: string; password: string }) => {
     try {
@@ -59,6 +60,8 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
         sendOtp('staff');
       }
       
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -105,6 +108,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setIsLoading(true);
     loginMutation.mutate({ email, password });
   };
 
@@ -140,7 +144,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
                 disabled={loginMutation.isPending}
               />
             </div>
-            <Button type="submit" className="w-full" disabled={loginMutation.isPending}>
+            <Button type="submit" className="w-full" disabled={isLoading}>
               {loginMutation.isPending ? "Logging in..." : "Login"}
             </Button>
             {error && <div className="text-red-500 text-center text-sm mt-2">{error}</div>}

@@ -24,12 +24,22 @@ export default function AppointmentCard({ appointment, role, fetchAppointments }
               ? 'bg-blue-100 text-blue-700'
               : appointment.status === 'completed'
               ? 'bg-green-100 text-green-700'
+              : appointment.status === 'cancelled'
+              ? 'bg-red-100 text-red-700'
+              : appointment.status === 'no-show'
+              ? 'bg-orange-100 text-orange-700'
+              : appointment.status === 'declined'
+              ? 'bg-red-100 text-red-700'
+              : appointment.status === 'scheduled'
+              ? 'bg-green-100 text-green-700'
               : 'bg-red-100 text-red-700'
+              
           }`}
         >
           {appointment.status.toUpperCase()}
           <div className="text-red-700">
-            {appointment.status === 'pending' && new Date(appointment.date) <= new Date() && ' (Expired)'}
+            {appointment.status === 'pending' && new Date(appointment.date) <= new Date() && '(Expired)'}
+            {appointment.status === 'scheduled' && new Date(appointment.date) <= new Date() && 'Missing Status'}
           </div>
         </span>
       </div>

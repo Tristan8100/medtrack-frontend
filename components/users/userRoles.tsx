@@ -40,6 +40,7 @@ export default function UsersPage({ searchRole, title, description }: UserProps)
 
   const fetchUsers = async () => {
     try {
+      //console.log('Fetching users...');
       const response = await api2.get(`/users/all?role=${searchRole}`, {
         params: {
           page,
@@ -52,6 +53,7 @@ export default function UsersPage({ searchRole, title, description }: UserProps)
 
       setUsers(payload.data);
       setHasNextPage(payload.nextPage);
+      console.log('Fetched users');
     } catch (err) {
       console.error('Error fetching users:', err);
       setError('Failed to fetch users');
@@ -60,12 +62,13 @@ export default function UsersPage({ searchRole, title, description }: UserProps)
 
 
   useEffect(() => {
-    setPage(1);
+    //setPage(1);
     fetchUsers();
-  }, [page, {/*role*/}]);//onchange
+    console.log('Page changed:', page);
+  }, [page]);//onchange
 
   useEffect(() => {
-    setPage(1);
+    //setPage(1);
     const delay = setTimeout(() => {
         console.log('Search changed:', search);
       setPage(1);
