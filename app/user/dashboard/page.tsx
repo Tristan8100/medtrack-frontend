@@ -108,7 +108,7 @@ export default function PatientDashboard() {
 
         {/* Upcoming Appointment Section */}
         {data.upcoming ? (
-          <Card className="border border-border bg-white shadow-sm hover:shadow-md transition-shadow">
+          <Card className="border border-border shadow-sm hover:shadow-md transition-shadow">
             <CardHeader className="pb-4">
               <div className="flex items-center gap-3">
                 <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
@@ -167,7 +167,7 @@ export default function PatientDashboard() {
             </CardContent>
           </Card>
         ) : (
-          <Card className="border border-border bg-blue-50">
+          <Card className="border border-border">
             <CardContent className="pt-6">
               <div className="flex items-center gap-3">
                 <Calendar className="w-6 h-6 text-blue-600 flex-shrink-0" />
@@ -182,7 +182,7 @@ export default function PatientDashboard() {
           <h2 className="text-xl font-bold text-foreground mb-4">Appointment Summary</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {Object.entries(data.stats).map(([status, count]) => (
-              <Card key={status} className="border border-border bg-white hover:shadow-sm transition-shadow">
+              <Card key={status} className="border border-border hover:shadow-sm transition-shadow">
                 <CardContent className="pt-6">
                   <p className="text-3xl font-bold text-primary mb-2">{count}</p>
                   <p className="text-sm font-medium text-muted-foreground capitalize">{status}</p>
@@ -198,7 +198,7 @@ export default function PatientDashboard() {
           {data.recent.length > 0 ? (
             <div className="space-y-4">
               {data.recent.map((appt) => (
-                <Card key={appt._id} className="border border-border bg-white hover:shadow-md transition-shadow cursor-pointer">
+                <Card key={appt._id} className="border border-border hover:shadow-md transition-shadow cursor-pointer">
                   <CardContent className="pt-6">
                     <div className="space-y-4">
                       <div className="flex items-start justify-between">

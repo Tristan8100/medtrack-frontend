@@ -7,7 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Loader2, User, Mail, Lock, Shield, CheckCircle2, KeyRound } from 'lucide-react';
+import { Loader2, User, Mail, Lock, Shield, CheckCircle2, KeyRound, SunMoon } from 'lucide-react';
+import { ModeToggle } from '../theme-toggle';
 
 interface UserType {
   _id: string;
@@ -257,6 +258,19 @@ export default function MyProfilePage() {
                     )}
                   </Button>
                 </form>
+              </CardContent>
+            </Card>
+
+            {/* SYSTEM SETTINGS */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <SunMoon className="w-5 h-5" />Sytem Settings
+                </CardTitle>
+                <CardDescription>Update your system settings</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ModeToggle />
               </CardContent>
             </Card>
           </div>

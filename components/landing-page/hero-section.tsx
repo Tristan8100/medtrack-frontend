@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { TextEffect } from '@/components/motion-primitives/text-effect'
 import { AnimatedGroup } from '@/components/motion-primitives/animated-group'
 import { HeroHeader } from './header'
-
+import Link from 'next/link'
 
 export const transitionVariants = {
   item: {
@@ -73,19 +73,23 @@ export default function HeroSection() {
                                 }}
                                 className="mt-12">
                                 <div className="mx-auto flex max-w-md flex-col gap-4 sm:flex-row sm:items-center sm:justify-center">
-                                    <Button
-                                        size="lg"
-                                        className="rounded-lg bg-blue-600 hover:bg-blue-700">
-                                        <Calendar className="mr-2 size-5" />
-                                        Book Appointment
-                                    </Button>
-                                    <Button
-                                        variant="outline"
-                                        size="lg"
-                                        className="rounded-lg border-2">
-                                        Learn More
-                                        <ArrowRight className="ml-2 size-5" />
-                                    </Button>
+                                    <Link href={'/auth/login'}>
+                                        <Button
+                                            size="lg"
+                                            className="rounded-lg bg-blue-600 hover:bg-blue-700">
+                                            <Calendar className="mr-2 size-5" />
+                                            Book Appointment
+                                        </Button>
+                                    </Link>
+                                    <a href={'/#features'}>
+                                        <Button
+                                            variant="outline"
+                                            size="lg"
+                                            className="rounded-lg border-2">
+                                            Learn More
+                                            <ArrowRight className="ml-2 size-5" />
+                                        </Button>
+                                    </a>
                                 </div>
 
                                 <div

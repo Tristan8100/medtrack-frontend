@@ -82,22 +82,39 @@ export default function FAQSection() {
                                         className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden"
                                     >
                                         <button
-                                            onClick={() => toggleItem(item.id)}
-                                            className="w-full px-6 py-5 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors"
+                                        onClick={() => toggleItem(item.id)}
+                                        className="
+                                            group w-full px-6 py-5
+                                            flex items-center justify-between
+                                            hover:bg-gray-50
+                                            dark:hover:bg-gray-700
+                                            transition-colors
+                                        "
                                         >
-                                            <div className="flex items-center gap-3">
-                                                <div className="flex-shrink-0 w-10 h-10 bg-blue-100 dark:bg-blue-900/40 rounded-lg flex items-center justify-center">
-                                                    <Icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                                                </div>
-                                                <span className="text-left font-medium text-gray-900 dark:text-white">
-                                                    {item.question}
-                                                </span>
+                                        <div className="flex items-center gap-3">
+                                            <div className="flex-shrink-0 w-10 h-10 bg-blue-100 dark:bg-blue-900/40 rounded-lg flex items-center justify-center">
+                                            <Icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                                             </div>
-                                            <ChevronDown 
-                                                className={`w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform flex-shrink-0 ml-4 ${
-                                                    isOpen ? 'transform rotate-180' : ''
-                                                }`}
-                                            />
+
+                                            <span
+                                            className="
+                                                text-left font-medium
+                                                text-gray-900 dark:text-gray-200
+                                                dark:group-hover:text-white
+                                            "
+                                            >
+                                            {item.question}
+                                            </span>
+                                        </div>
+
+                                        <ChevronDown
+                                            className={`
+                                            w-5 h-5 flex-shrink-0 ml-4 transition-transform
+                                            text-gray-500 dark:text-gray-400
+                                            dark:group-hover:text-white
+                                            ${isOpen ? 'rotate-180' : ''}
+                                            `}
+                                        />
                                         </button>
                                         <div
                                             className={`transition-all duration-300 ease-in-out ${

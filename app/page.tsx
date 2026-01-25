@@ -3,7 +3,6 @@ import FeaturesSection from "@/components/landing-page/features";
 import FooterSection from "@/components/landing-page/footer";
 import HeroSection from "@/components/landing-page/hero-section";
 import ServicesSection from "@/components/landing-page/service";
-import Image from "next/image";
 
 export default function Home() {
   return (
