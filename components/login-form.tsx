@@ -154,15 +154,15 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
             <Link href="/auth/register" className="underline underline-offset-4">
               register
             </Link>
+            <div className="text-center text-sm mt-4">
+              Forgot your password?{" "}
+              <Link href="/forgot-password/send-reset-link" className="underline underline-offset-4">
+                Reset Password
+              </Link>
+            </div>
           </div>
         </CardContent>
       </Card>
-      <div className="text-center text-sm">
-        Forgot your password?{" "}
-        <Link href="/forgot-password/send-reset-link" className="underline underline-offset-4">
-          Reset Password
-        </Link>
-      </div>
     </div>
   );
 }

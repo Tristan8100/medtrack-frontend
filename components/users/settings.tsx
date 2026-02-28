@@ -380,19 +380,25 @@ export default function MyProfilePage() {
 
 
       <Dialog open={otpModalOpen} onOpenChange={(open) => { if (!verifyingCode) setOtpModalOpen(open); }}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
+        <DialogContent className='flex flex-col items-center'>
+          <DialogTitle></DialogTitle>
+          <div className="sm:w-[100%] w-[100%]">
             <div className="flex items-center justify-center w-12 h-12 rounded-full bg-blue-100 mx-auto mb-2">
               <Phone className="w-6 h-6 text-blue-600" />
             </div>
-            <DialogTitle className="text-center">Verify your phone number</DialogTitle>
-            <DialogDescription className="text-center">
-              We sent a {OTP_LENGTH}-digit code to{' '}
-              <span className="font-medium text-foreground">{user?.phoneNumber}</span>.
-              Enter it below to verify your number.
-            </DialogDescription>
-          </DialogHeader>
 
+            <div className="text-center w-full">
+              Verify your phone number
+            </div>
+
+            <div className="text-center w-full break-words">
+              We sent a {OTP_LENGTH}-digit code to{" "}
+              <span className="font-medium text-foreground break-all">
+                {user?.phoneNumber}
+              </span>.
+              Enter it below to verify your number.
+            </div>
+          </div>
           <div className="flex justify-center gap-2 my-4" onPaste={handleOtpPaste}>
             {otpDigits.map((digit, i) => (
               <input
@@ -404,7 +410,7 @@ export default function MyProfilePage() {
                 value={digit}
                 onChange={(e) => handleOtpChange(i, e.target.value)}
                 onKeyDown={(e) => handleOtpKeyDown(i, e)}
-                className="w-11 h-14 text-center text-xl font-semibold border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                className="w-10 h-12 sm:w-11 sm:h-14 text-center text-xl font-semibold border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
               />
             ))}
           </div>
