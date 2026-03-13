@@ -3,86 +3,82 @@ import { Card } from "../ui/card";
 import { Appointment } from "./all-appointments";
 import AppointmentModal from "./assign-status";
 
-export default function AppointmentCard({ appointment, role, fetchAppointments }: { 
+export default function AppointmentCard({
+  appointment,
+  role,
+  fetchAppointments,
+}: {
   appointment: Appointment;
   role: "patient" | "staff" | "admin";
   fetchAppointments: () => void;
 }) {
   return (
-    <Card key={appointment._id} className="p-5 space-y-3">
-      <div className="flex justify-between items-start">
-        <div>
-          <p className="text-sm text-muted-foreground">Appointment ID</p>
-          <p className="font-mono text-xs">{appointment._id}</p>
+    <Card className="px-3 py-2">
+      <div className="flex flex-wrap items-center gap-2 md:gap-4">
+
+        {/* Patient + ID */}
+        <div className="flex flex-col min-w-[140px] flex-shrink-0">
+          <span className="font-medium truncate">{appointment.patientId.name}</span>
+          <span className="text-[10px] text-muted-foreground truncate">
+            {appointment._id}
+          </span>
         </div>
 
-        <span
-          className={`px-3 py-1 rounded-full text-xs font-medium ${
-            appointment.status === 'pending'
-              ? 'bg-yellow-100 text-yellow-700'
-              : appointment.status === 'approved'
-              ? 'bg-blue-100 text-blue-700'
-              : appointment.status === 'completed'
-              ? 'bg-green-100 text-green-700'
-              : appointment.status === 'cancelled'
-              ? 'bg-red-100 text-red-700'
-              : appointment.status === 'no-show'
-              ? 'bg-orange-100 text-orange-700'
-              : appointment.status === 'declined'
-              ? 'bg-red-100 text-red-700'
-              : appointment.status === 'scheduled'
-              ? 'bg-green-100 text-green-700'
-              : 'bg-red-100 text-red-700'
-              
-          }`}
-        >
-          {appointment.status.toUpperCase()}
-          <div className="text-red-700">
-            {appointment.status === 'pending' && new Date(appointment.date) <= new Date() && '(Expired)'}
-            {appointment.status === 'scheduled' && new Date(appointment.date) <= new Date() && 'Missing Status'}
-          </div>
-        </span>
+        {/* Staff */}
+        <div className="hidden md:flex flex-col min-w-[120px] flex-shrink-0">
+          <span className="text-sm truncate">{appointment.staffId?.name ?? "—"}</span>
+        </div>
+
+        {/* Date */}
+        <div className="flex flex-col min-w-[120px] flex-shrink-0">
+          <span className="text-sm truncate">
+            {new Intl.DateTimeFormat("en-GB", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            }).format(new Date(appointment.date))}
+          </span>
+        </div>
+
+        {/* Complaint */}
+        <div className="flex-1 min-w-[100px] text-sm truncate">
+          {appointment.chiefComplaint}
+        </div>
+
+        {/* Status */}
+        <div className="flex-shrink-0">
+          <span
+            className={`px-2 py-1 rounded text-xs font-medium ${
+              appointment.status === "pending"
+                ? "bg-yellow-100 text-yellow-700"
+                : appointment.status === "completed"
+                ? "bg-green-100 text-green-700"
+                : appointment.status === "cancelled"
+                ? "bg-red-100 text-red-700"
+                : "bg-gray-100 text-gray-700"
+            }`}
+          >
+            {appointment.status}
+          </span>
+        </div>
+
+        {/* Actions */}
+        <div className="flex gap-1 flex-shrink-0">
+          {role !== "patient" && (
+            <DialogCreateMedicalRecord
+              patientId={appointment.patientId._id}
+              appointmentId={appointment._id}
+              onSuccess={fetchAppointments}
+            />
+          )}
+          <AppointmentModal
+            appointment={appointment}
+            role={role}
+            onUpdated={fetchAppointments}
+          />
+        </div>
+
       </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
-        <p><span className="font-medium">Patient:</span> {appointment.patientId.name}</p>
-        <p><span className="font-medium">Patient Id:</span> {appointment.patientId._id}</p>
-        <p><span className="font-medium">Staff:</span> {appointment.staffId?.name ?? '—'}</p>{/* always checkk if exist if implement delete */}
-
-        <p>
-          <span className="font-medium">Date:</span>{' '}
-          {new Intl.DateTimeFormat('en-GB', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          }).format(new Date(appointment.date))}
-        </p>
-
-        <p>
-          <span className="font-medium">Created:</span>{' '}
-          {new Intl.DateTimeFormat('en-GB', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-          }).format(new Date(appointment.created_at))}
-        </p>
-      </div>
-
-      <div className="pt-2 border-t">
-        <p className="text-sm">
-          <span className="font-medium">Chief Complaint:</span> {appointment.chiefComplaint}
-        </p>
-        <p className="text-sm text-muted-foreground">{appointment.notes}</p>
-      </div>
-      {/* Modal */}
-      {role !== 'patient' && <DialogCreateMedicalRecord patientId={appointment.patientId._id} appointmentId={appointment._id} onSuccess={() => fetchAppointments()} /> }
-
-      {/* Modal */}
-      <AppointmentModal
-        appointment={appointment}
-        role={role}
-        onUpdated={() => fetchAppointments()} // bubbles to parent
-      />
     </Card>
   );
 }

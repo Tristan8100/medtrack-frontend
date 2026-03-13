@@ -135,18 +135,24 @@ export default function AllAppointmentsPage({ role, id }: roleBasedProps) {
               <SelectItem value="late">Late</SelectItem>
             </SelectContent>
           </Select>
+          <div className="flex items-center gap-2">
+            from
+            <Input
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
+          </div>
 
-          <Input
-            type="date"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-          />
-
-          <Input
-            type="date"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-          />
+          <div className="flex items-center gap-2">
+            to
+            <Input
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+            />
+          </div>
+          
 
           <Button
             variant="outline"
@@ -163,7 +169,7 @@ export default function AllAppointmentsPage({ role, id }: roleBasedProps) {
       </Card>
 
       {/* Appointments */}
-      <div className="grid gap-4">
+      <div className="grid gap-4 h-[600px] overflow-auto">
         {appointments.length === 0 && (
           <p className="text-sm text-muted-foreground text-center">
             No appointments found.

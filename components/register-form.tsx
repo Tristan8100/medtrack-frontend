@@ -17,6 +17,7 @@ import { useMutation } from '@tanstack/react-query';
 import { api } from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import Link from "next/link";
 
 export function RegisterForm({
   className,
@@ -130,9 +131,9 @@ export function RegisterForm({
               )}
               <div className="text-center text-sm">
                 Already have an account?{" "}
-                <a href="/auth/login" className="underline underline-offset-4">
+                <Link href="/auth/login" className="underline underline-offset-4 font-bold">
                   Sign in
-                </a>
+                </Link>
               </div>
             </div>
           </form>

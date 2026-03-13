@@ -16,6 +16,7 @@ import { api } from "@/lib/api";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import Link from "next/link";
+import { Eye, EyeOff } from "lucide-react";
 
 export function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
   const { login } = useAuth(); // for saving user and token
@@ -24,6 +25,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
   const [error, setError] = useState("");
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [hidePassword, setHidePassword] = useState(true);
 
   const attemptAdminLogin = async (credentials: { email: string; password: string }) => {
     try {
@@ -133,16 +135,24 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
                 disabled={loginMutation.isPending}
               />
             </div>
-            <div className="grid gap-3">
+            <div className="grid gap-3 relative">
               <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
-                type="password"
+                type={hidePassword ? "password" : "text"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 disabled={loginMutation.isPending}
               />
+              <Button
+                type="button"
+                onClick={() => setHidePassword(!hidePassword)}
+                className="absolute right-2 top-1/2 -translate-y-1/7"
+                variant="ghost"
+              >
+                {hidePassword ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+              </Button>
             </div>
             <Button type="submit" className="w-full" disabled={isLoading}>
               {loginMutation.isPending ? "Logging in..." : "Login"}
@@ -151,12 +161,12 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
           </form>
           <div className="text-center text-sm mt-4">
             Don't have an account?{" "}
-            <Link href="/auth/register" className="underline underline-offset-4">
-              register
+            <Link href="/auth/register" className="underline underline-offset-4 font-bold">
+              Register
             </Link>
             <div className="text-center text-sm mt-4">
               Forgot your password?{" "}
-              <Link href="/forgot-password/send-reset-link" className="underline underline-offset-4">
+              <Link href="/forgot-password/send-reset-link" className="underline underline-offset-4 font-bold">
                 Reset Password
               </Link>
             </div>
