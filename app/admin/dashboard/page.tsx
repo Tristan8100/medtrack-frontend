@@ -26,21 +26,26 @@ import {
     YAxis,
     CartesianGrid
 } from "recharts";
+import UpdateReservationLimitDialog from "@/components/system-settings/system-settings-dialog";
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D', '#FFC658', '#FF6B9D'];
 
 export default function AnalyticsPage() {
     const [data, setData] = useState<any>(null);
     const [error, setError] = useState<string | null>(null);
+    const [limit, setLimit] = useState<number | null>(null);
 
     const fetchData = async () => {
         try {
             const response = await api2.get("/analytics");
             setData(response.data);
+            const systemLimit = await api2.get("/system-settings");
+            setLimit(systemLimit.data.data.reservationLimit);
         } catch (error: any) {
             setError(error?.response?.data?.message || "Failed to load analytics");
         }
     };
+
 
     useEffect(() => {
         fetchData();
@@ -121,6 +126,25 @@ export default function AnalyticsPage() {
                         <p className="text-xs text-muted-foreground">
                             All time
                         </p>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">
+                            Reservation Limit
+                        </CardTitle>
+                        <Calendar className="h-4 w-4 text-muted-foreground" />
+                    </CardHeader>
+                    <CardContent>
+                        <div className="text-2xl font-bold">
+                            {limit}
+                        </div>
+                        <UpdateReservationLimitDialog
+                            onUpdated={() => {
+                                fetchData();
+                            }}
+                        />
                     </CardContent>
                 </Card>
 

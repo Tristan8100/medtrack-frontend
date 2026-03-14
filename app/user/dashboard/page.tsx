@@ -130,12 +130,6 @@ export default function PatientDashboard() {
                         {formatDate(data.upcoming.date).date}
                       </p>
                     </div>
-                    <div className="flex items-center gap-2 mt-2">
-                      <Clock className="w-4 h-4 text-primary" />
-                      <p className="text-base font-semibold text-foreground">
-                        {formatDate(data.upcoming.date).time}
-                      </p>
-                    </div>
                   </div>
                 </div>
                 <div className="space-y-4">
